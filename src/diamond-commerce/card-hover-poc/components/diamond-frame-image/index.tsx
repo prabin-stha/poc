@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 interface Props {
   fallback: React.ReactNode;
@@ -7,9 +7,8 @@ interface Props {
 export function DiamondFrameImage({ fallback }: Props) {
   const [showIframe, setShowIframe] = useState(false);
   const timeout = useRef<number | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const HOVER_DURATION_IN_MS = 2000;
+  const HOVER_DURATION_IN_MS = 500;
 
   const handleMouseEnter = () => {
     if (showIframe === false) {
@@ -22,6 +21,7 @@ export function DiamondFrameImage({ fallback }: Props) {
 
   const handleMouseLeave = () => {
     timeout?.current && clearTimeout(timeout.current);
+    setShowIframe(false);
   };
 
   return (
@@ -32,7 +32,6 @@ export function DiamondFrameImage({ fallback }: Props) {
     >
       {showIframe ? (
         <iframe
-          ref={iframeRef}
           style={iframeStyle}
           src="https://v3601514.v360.in/vision360.html?d=DMV185-322A&surl=https://v3601514.v360.in/"
           scrolling="no"
